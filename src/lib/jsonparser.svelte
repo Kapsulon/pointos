@@ -1,9 +1,6 @@
 <script lang="ts" context="module">
-import { readFileSync } from 'fs';
-/* fill array json */
-
-export function getJsonstudent(fileName: string): object | null {
-    const file = readFileSync(fileName, 'utf-8');
-    return JSON.parse(file);
-}
+    export async function getJsonstudent(): Promise<any> {
+        const file = await fetch("src/students.json").then((res) => res.text());
+        return JSON.parse(file);
+    }
 </script>
