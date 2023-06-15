@@ -21,7 +21,8 @@
   "type": "module",
   "dependencies": {
     "sass": "^1.63.4",
-    "scss": "^0.2.4"
+    "scss": "^0.2.4",
+    "twemoji": "^14.0.2"
   },
   "description": "Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).",
   "main": "svelte.config.js",
