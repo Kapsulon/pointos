@@ -3,8 +3,23 @@
     import { createCards } from "$lib/studentcard.svelte";
     import twemoji from "twemoji";
     onMount(() => {
+        function delay(ms: number) {
+            return new Promise( resolve => setTimeout(resolve, ms) );
+        }
+
+        async function scrollLoop() {
+            while (true) {
+                await delay(20);
+                window.scrollBy(0,1);
+                if (window.scrollY >= document.body.scrollHeight - window.innerHeight) {
+                    window.scrollTo(0,0);
+                }
+            }
+        }
+
         createCards().then(() => {
             twemoji.parse(document.body);
+            scrollLoop();
         });
     });
 </script>
