@@ -1,5 +1,23 @@
 <script lang="ts" context="module">
     import { getJsonstudent } from "$lib/jsonparser.svelte";
+    import { get } from "svelte/store";
+
+    function getTotalTime(time_entries: any): number {
+        let now = Date.now();
+        let total = 0;
+
+        for (let i = 0; i < time_entries.length; i++) {
+            if (time_entries[i].type == "in") {
+                if (i + 1 < time_entries.length && time_entries[i + 1].type == "out") {
+                    total += Number(time_entries[i + 1].date) - Number(time_entries[i].date);
+                } else {
+                    total += now - Number(time_entries[i].date);
+                }
+            }
+        }
+        return total;
+    }
+
     export async function createCards():Promise<void> {
         let data: any = await getJsonstudent()
         let students = document.createElement("div");
@@ -8,7 +26,10 @@
             let student = students.appendChild(document.createElement("div"));
             student.classList.add("student");
             let emoji = student.appendChild(document.createElement("span"));
-            if (!data[key].out) {
+            if (getTotalTime(data[key].time_entries) > 21600 * 1000) {
+                emoji.innerHTML = "🔥";
+                emoji.classList.add("finished");
+            } else if (!data[key].out) {
                 emoji.classList.add("spin");
                 emoji.innerHTML = "🤙";
             } else {

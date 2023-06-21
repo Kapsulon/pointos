@@ -13,6 +13,13 @@
                 window.scrollBy(0,1);
                 if (window.scrollY >= document.body.scrollHeight - window.innerHeight) {
                     window.scrollTo(0,0);
+                    // delete div with class students
+                    let students = document.querySelector(".students");
+                    if (students)
+                        students.remove();
+                    createCards().then(() => {
+                        twemoji.parse(document.body);
+                    });
                 }
             }
         }
